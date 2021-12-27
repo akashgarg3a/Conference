@@ -1,9 +1,12 @@
 package com.pluralsight.conferencedemo.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name = "sessions")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
 
     @Id
@@ -11,7 +14,7 @@ public class Session {
     private Long session_id;
     private String session_name;
     private String session_description;
-    private String session_length;
+    private Integer session_length;
 
     @ManyToMany
     @JoinTable(
@@ -55,11 +58,11 @@ public class Session {
         this.session_description = session_description;
     }
 
-    public String getSession_length() {
+    public Integer getSession_length() {
         return session_length;
     }
 
-    public void setSession_length(String session_length) {
+    public void setSession_length(Integer session_length) {
         this.session_length = session_length;
     }
 }
