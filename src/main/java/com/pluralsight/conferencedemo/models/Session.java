@@ -1,9 +1,7 @@
 package com.pluralsight.conferencedemo.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "sessions")
 public class Session {
@@ -15,7 +13,18 @@ public class Session {
     private String session_description;
     private String session_length;
 
+    @ManyToMany(mappedBy = "speakers")
+    List<Session> sessions;
+
     public Session() {
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
     }
 
     public Long getSession_id() {
