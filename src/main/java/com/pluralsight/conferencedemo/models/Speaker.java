@@ -1,5 +1,7 @@
 package com.pluralsight.conferencedemo.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -15,6 +17,10 @@ public class Speaker {
     private String company;
     private String speaker_bio;
 
+    @Lob
+    @Type(type = "org.hibernate.org.BinaryType")
+    private byte[] speaker_photo;
+
     @ManyToMany
     @JoinTable(
             name = "session_speakers",
@@ -23,6 +29,14 @@ public class Speaker {
     private List<Speaker> speakers;
 
     public Speaker() {
+    }
+
+    public byte[] getSpeaker_photo() {
+        return speaker_photo;
+    }
+
+    public void setSpeaker_photo(byte[] speaker_photo) {
+        this.speaker_photo = speaker_photo;
     }
 
     public List<Speaker> getSpeakers() {
