@@ -13,18 +13,22 @@ public class Session {
     private String session_description;
     private String session_length;
 
-    @ManyToMany(mappedBy = "speakers")
-    List<Session> sessions;
+    @ManyToMany
+    @JoinTable(
+            name = "session_speakers",
+            joinColumns = @JoinColumn(name = "session_id"),
+            inverseJoinColumns = @JoinColumn(name = "speaker_id"))
+    private List<Speaker> speakers;
 
     public Session() {
     }
 
-    public List<Session> getSessions() {
-        return sessions;
+    public List<Speaker> getSpeakers() {
+        return speakers;
     }
 
-    public void setSessions(List<Session> sessions) {
-        this.sessions = sessions;
+    public void setSpeakers(List<Speaker> speakers) {
+        this.speakers = speakers;
     }
 
     public Long getSession_id() {

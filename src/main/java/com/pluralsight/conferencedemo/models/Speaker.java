@@ -18,15 +18,11 @@ public class Speaker {
     private String speaker_bio;
 
     @Lob
-    @Type(type = "org.hibernate.org.BinaryType")
+    @Type(type="org.hibernate.type.BinaryType")
     private byte[] speaker_photo;
 
-    @ManyToMany
-    @JoinTable(
-            name = "session_speakers",
-            joinColumns = @JoinColumn(name = "session_id"),
-            inverseJoinColumns = @JoinColumn(name = "speaker_id"))
-    private List<Speaker> speakers;
+    @ManyToMany(mappedBy = "speakers")
+    List<Session> sessions;
 
     public Speaker() {
     }
@@ -39,12 +35,12 @@ public class Speaker {
         this.speaker_photo = speaker_photo;
     }
 
-    public List<Speaker> getSpeakers() {
-        return speakers;
+    public List<Session> getSessions() {
+        return sessions;
     }
 
-    public void setSpeakers(List<Speaker> speakers) {
-        this.speakers = speakers;
+    public void setSessions(List<Session> sessions) {
+        this.sessions = sessions;
     }
 
     public Long getSpeaker_id() {
