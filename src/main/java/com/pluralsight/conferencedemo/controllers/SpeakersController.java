@@ -1,8 +1,7 @@
 package com.pluralsight.conferencedemo.controllers;
 
 import com.pluralsight.conferencedemo.models.Speaker;
-import com.pluralsight.conferencedemo.repositories.SpeakerRepository;
-import org.springframework.beans.BeanUtils;
+import com.pluralsight.conferencedemo.services.SpeakerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,39 +11,37 @@ import java.util.List;
 @RequestMapping("/api/v1/speakers")
 public class SpeakersController {
 
+    private SpeakerService speakerService;
+
     @Autowired
-    private SpeakerRepository speakerRepository;
+    public SpeakersController(SpeakerService speakerService) {
+        this.speakerService = speakerService;
+    }
 
     @GetMapping
     public List<Speaker> list() {
-        return speakerRepository.findAll();
+        return speakerService.findAll();
     }
 
     @GetMapping
     @RequestMapping("{id}")
     public Speaker get(@PathVariable Long id) {
-        return speakerRepository.getById(id);
+        return speakerService.getById(id);
     }
 
     @PostMapping
     public Speaker create(@RequestBody final Speaker speaker) {
-        return speakerRepository.saveAndFlush(speaker);
+        return speakerService.save(speaker);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public void delete(@PathVariable Long id) {
         // We need to add logic for children records before deleting
-        speakerRepository.deleteById(id);
+        speakerService.deleteById(id);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public Speaker update(@PathVariable Long id, @RequestBody Speaker speaker) {
-        // As it update we except all the value that are passed
-        // TODO: Add validation that all the parameters are passed, except return 400 bad payload
-
-        Speaker existingSpeaker = speakerRepository.getById(id);
-        // used for copy the data
-        BeanUtils.copyProperties(speaker, existingSpeaker,"speaker_id");
-        return speakerRepository.saveAndFlush(existingSpeaker);
+        return speakerService.update(id, speaker);
     }
 }
