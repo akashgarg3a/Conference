@@ -19,13 +19,13 @@ public class SpeakersController {
     }
 
     @GetMapping
-    public List<Speaker> list() {
+    public List<Speaker> findAll() {
         return speakerService.findAll();
     }
 
     @GetMapping
     @RequestMapping("{id}")
-    public Speaker get(@PathVariable Long id) {
+    public Speaker getById(@PathVariable Long id) {
         return speakerService.getById(id);
     }
 
@@ -35,7 +35,7 @@ public class SpeakersController {
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    public void delete(@PathVariable Long id) {
+    public void deleteById(@PathVariable Long id) {
         // We need to add logic for children records before deleting
         speakerService.deleteById(id);
     }
