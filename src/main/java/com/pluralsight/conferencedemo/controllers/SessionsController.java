@@ -19,13 +19,13 @@ public class SessionsController {
     }
 
     @GetMapping
-    public List<Session> list() {
+    public List<Session> findAll() {
         return sessionService.findAll();
     }
 
     @GetMapping
     @RequestMapping("{id}")
-    public Session get(@PathVariable Long id) {
+    public Session getById(@PathVariable Long id) {
         return sessionService.getById(id);
     }
 
